@@ -21,7 +21,7 @@ main = do
     bombas <- getLine
     let qtdBombas = validarQuantidadeBombas (validarInteiro bombas) tamanho
 
-    let tabuleiro = gerarTabuleiro tamanho qtdBombas
+    tabuleiro <- gerarTabuleiro tamanho qtdBombas
 
     revelarTabuleiro tabuleiro tamanho
 

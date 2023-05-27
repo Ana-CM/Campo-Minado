@@ -7,6 +7,7 @@ module Main where
 
 -- Importações
 import Validacoes
+import Tabuleiro
 
 
 -- Método responsável por iniciar o jogo "CAMPO MINADO"
@@ -19,6 +20,10 @@ main = do
     putStrLn "Insira a quantidade de bombas tabuleiro:"
     bombas <- getLine
     let qtdBombas = validarQuantidadeBombas (validarInteiro bombas) tamanho
+
+    let tabuleiro = gerarTabuleiro tamanho qtdBombas
+
+    revelarTabuleiro tabuleiro tamanho
 
     putStrLn ("Tamanho do tabuleiro: " ++ show tamanho)
     putStrLn ("Quantidade de bombas: " ++ show qtdBombas)

@@ -1,0 +1,1 @@
+#sudo apt install libghc-random-dev

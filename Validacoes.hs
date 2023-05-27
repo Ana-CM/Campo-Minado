@@ -8,6 +8,7 @@ module Validacoes where
 -- Importações
 import Text.Read (readMaybe)
 
+
 -- Método responsável por validar inteiro, caso não seja um inteiro, retorna 5
 validarInteiro :: String -> Int
 validarInteiro entrada =

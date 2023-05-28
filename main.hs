@@ -25,6 +25,7 @@ main = do
 
     revelarTabuleiro tabuleiro tamanho
 
+    putStrLn ""
     putStrLn ("Tamanho do tabuleiro: " ++ show tamanho)
     putStrLn ("Quantidade de bombas: " ++ show qtdBombas)
 

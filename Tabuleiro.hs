@@ -42,8 +42,13 @@ adicionarBombasAleatorias qtdBombas posicoes = do
     case maybePosicao of
         Nothing -> adicionarBombasAleatorias qtdBombas posicoes
         Just posicao -> do
-            let novasPosicoes = (adicionarBomba posicao) : delete posicao posicoes
-            adicionarBombasAleatorias (qtdBombas - 1) novasPosicoes
+            let indice = elemIndex posicao posicoes
+            case indice of
+                Nothing -> adicionarBombasAleatorias qtdBombas posicoes
+                Just idx -> do
+                    let (antes, depois) = splitAt idx posicoes
+                        novasPosicoes = antes ++ (adicionarBomba posicao : tail depois)
+                    adicionarBombasAleatorias (qtdBombas - 1) novasPosicoes
 
 -- Método responsável por sortear uma posição
 sortearPosicao :: [Posicao] -> IO (Maybe Posicao)
@@ -58,10 +63,19 @@ sortearPosicao posicoes = do
 adicionarBomba :: Posicao -> Posicao
 adicionarBomba posicao = posicao { bomba = True }
 
--- Método responsável por revelar o tabuleiro
 -- Método revelar tabuleiro (Por hora só mostra o valor de cada posição)
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do
-    putStrLn ""
-    putStrLn ("     " ++ concat (map (\x -> show x ++ " ") [0..tamanho-1]))
-    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ show (valor x) ++ " " else show (valor x) ++ " ") tabuleiro))
+    putStrLn ("     " ++ concat (map (\x -> show x ++ " | ") [0..tamanho-1]))
+
+    let imprimirValor posicao
+            | bomba posicao = "B"
+            | otherwise = show (valor posicao) 
+    
+    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
+
+    -- Descomente caso deseja imprimir as posições exibindo a linha e coluna de cada posição
+   {- putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro)) -}
+
+
+

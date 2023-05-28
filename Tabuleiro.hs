@@ -27,7 +27,8 @@ gerarTabuleiro :: Int -> Int -> IO Tabuleiro
 gerarTabuleiro tamanho qtdBombas = do
     let posicoes = gerarPosicoes tamanho
     posicoesComBombas <- adicionarBombasAleatorias qtdBombas posicoes
-    return posicoesComBombas
+    posicoesComValores <- adicionarValores (tamanho * tamanho) posicoesComBombas
+    return posicoesComValores 
 
 -- Método responsável por gerar as posições do tabuleiro
 gerarPosicoes :: Int -> [Posicao]
@@ -63,6 +64,38 @@ sortearPosicao posicoes = do
 adicionarBomba :: Posicao -> Posicao
 adicionarBomba posicao = posicao { bomba = True }
 
+-- Método responsável por adicionar os valores nas posições
+adicionarValores :: Int -> [Posicao] -> IO [Posicao]
+adicionarValores 0 posicoes = return posicoes
+adicionarValores qtd posicoes = do
+    let posicao = posicoes !! (qtd - 1)
+    if bomba posicao
+        then adicionarValores (qtd - 1) posicoes
+        else do
+            let indice = elemIndex posicao posicoes
+            case indice of
+                Nothing -> adicionarValores (qtd - 1) posicoes
+                Just idx -> do
+                    let (antes, depois) = splitAt idx posicoes
+                        novasPosicoes = antes ++ (adicionarValor posicao posicoes : tail depois)
+                    adicionarValores (qtd - 1) novasPosicoes
+
+-- Método responsável por adicionar quantas bombas tem ao redor de uma posição
+adicionarValor :: Posicao -> [Posicao] -> Posicao
+adicionarValor posicao posicoes = 
+    let posicoesAoRedor = posicoesAdjacentes posicao posicoes
+        qtdBombas = length (filter bomba posicoesAoRedor)
+    in posicao { valor = qtdBombas }
+
+-- Método responsável por retornar as posições adjacentes a uma posição
+posicoesAdjacentes :: Posicao -> [Posicao] -> [Posicao]
+posicoesAdjacentes posicao posicoes = filter (\adj -> ehAdjacente posicao adj) posicoes
+  where
+    ehAdjacente p1 p2 =
+        let dl = abs (linha p1 - linha p2)
+            dc = abs (coluna p1 - coluna p2)
+        in (dl == 1 && dc == 0) || (dl == 0 && dc == 1)
+    
 -- Método revelar tabuleiro
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do

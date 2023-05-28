@@ -19,7 +19,7 @@ main = do
 
     putStrLn "Insira a quantidade de bombas tabuleiro:"
     bombas <- getLine
-    let qtdBombas = validarQuantidadeBombas (validarInteiro bombas) tamanho
+    let qtdBombas = validarQuantidadeBombas (validarInteiro bombas) (tamanho*tamanho)
 
     tabuleiro <- gerarTabuleiro tamanho qtdBombas
 

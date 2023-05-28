@@ -23,6 +23,7 @@ main = do
 
     tabuleiro <- gerarTabuleiro tamanho qtdBombas
 
+    imprimirTabuleiro tabuleiro tamanho
     revelarTabuleiro tabuleiro tamanho
 
     putStrLn ""

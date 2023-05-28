@@ -99,6 +99,8 @@ posicoesAdjacentes posicao posicoes = filter (\adj -> ehAdjacente posicao adj) p
 -- Método revelar tabuleiro
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do
+    putStrLn ""
+    putStrLn "Tabuleiro revelado:"
     putStrLn ("     " ++ concat (map (\x -> show x ++ " | ") [0..tamanho-1]))
 
     let imprimirValor posicao
@@ -111,4 +113,17 @@ revelarTabuleiro tabuleiro tamanho = do
    {- putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro)) -}
 
 
+-- Método para imprimir o tabuleiro para o usuário
+imprimirTabuleiro :: Tabuleiro -> Int -> IO ()
+imprimirTabuleiro tabuleiro tamanho = do
+    putStrLn ""
+    putStrLn "Tabuleiro Parcial:"
+    putStrLn ("     " ++ concat (map (\x -> show x ++ " | ") [0..tamanho-1]))
+
+    let imprimirValor posicao
+            | aberta posicao = show (valor posicao)
+            | marcada posicao = "B"
+            | otherwise = "*"
+
+    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
 

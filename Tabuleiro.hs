@@ -8,6 +8,7 @@ module Tabuleiro where
 -- Importações
 import System.Random
 import Data.List
+import Data.Char (chr, ord)
 
 -- Tipo de dado que representa uma posição do tabuleiro
 data Posicao = Posicao {
@@ -101,13 +102,13 @@ revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do
     putStrLn ""
     putStrLn "Tabuleiro revelado:"
-    putStrLn ("     " ++ concat (map (\x -> show x ++ " | ") [0..tamanho-1]))
+    putStrLn ("     " ++ concat (map (\x -> return (chr (x + ord 'A' - 1)) ++ " | ") [1..tamanho]))
 
     let imprimirValor posicao
             | bomba posicao = "B"
             | otherwise = show (valor posicao) 
     
-    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
+    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
 
     -- Descomente caso deseja imprimir as posições exibindo a linha e coluna de cada posição
    {- putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro)) -}
@@ -118,12 +119,12 @@ imprimirTabuleiro :: Tabuleiro -> Int -> IO ()
 imprimirTabuleiro tabuleiro tamanho = do
     putStrLn ""
     putStrLn "Tabuleiro Parcial:"
-    putStrLn ("     " ++ concat (map (\x -> show x ++ " | ") [0..tamanho-1]))
+    putStrLn ("     " ++ concat (map (\x -> return (chr (x + ord 'A' - 1)) ++ " | ") [1..tamanho]))
 
     let imprimirValor posicao
             | aberta posicao = show (valor posicao)
             | marcada posicao = "B"
             | otherwise = "*"
 
-    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
+    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
 

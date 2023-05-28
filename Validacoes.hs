@@ -14,7 +14,14 @@ validarInteiro :: String -> Int
 validarInteiro entrada =
   case readMaybe entrada of
     Just numero -> numero
-    Nothing -> 5
+    Nothing -> 26
+
+-- Método responsável por validar o tamanho do tabuleiro
+validarTamanhoTabuleiro :: Int -> Int
+validarTamanhoTabuleiro tam
+  | tam < 2 = 26
+  | tam > 26 = 26
+  | otherwise = tam
 
 -- Método responsável por validar a quantidade de bombas
 validarQuantidadeBombas :: Int -> Int -> Int

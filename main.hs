@@ -15,7 +15,7 @@ main :: IO ()
 main = do
     putStrLn "Insira o tamanho do tabuleiro:"
     tam <- getLine
-    let tamanho = validarInteiro tam
+    let tamanho = validarTamanhoTabuleiro (validarInteiro tam)
 
     putStrLn "Insira a quantidade de bombas tabuleiro:"
     bombas <- getLine

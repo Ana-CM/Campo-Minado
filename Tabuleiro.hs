@@ -63,7 +63,7 @@ sortearPosicao posicoes = do
 adicionarBomba :: Posicao -> Posicao
 adicionarBomba posicao = posicao { bomba = True }
 
--- Método revelar tabuleiro (Por hora só mostra o valor de cada posição)
+-- Método revelar tabuleiro
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do
     putStrLn ("     " ++ concat (map (\x -> show x ++ " | ") [0..tamanho-1]))

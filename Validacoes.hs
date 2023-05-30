@@ -9,7 +9,7 @@ module Validacoes where
 import Text.Read (readMaybe)
 
 
--- Método responsável por validar inteiro, caso não seja um inteiro, retorna 5
+-- Método responsável por validar inteiro, caso não seja um inteiro, retorna 26
 validarInteiro :: String -> Int
 validarInteiro entrada =
   case readMaybe entrada of

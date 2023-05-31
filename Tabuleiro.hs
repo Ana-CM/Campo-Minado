@@ -101,7 +101,6 @@ posicoesAdjacentes posicao posicoes = filter (\adj -> ehAdjacente posicao adj) p
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do
     putStrLn ""
-    putStrLn "Tabuleiro revelado:"
     putStrLn ("     " ++ concat (map (\x -> return (chr (x + ord 'A' - 1)) ++ " | ") [1..tamanho]))
 
     let imprimirValor posicao
@@ -118,7 +117,6 @@ revelarTabuleiro tabuleiro tamanho = do
 imprimirTabuleiro :: Tabuleiro -> Int -> IO ()
 imprimirTabuleiro tabuleiro tamanho = do
     putStrLn ""
-    putStrLn "Tabuleiro Parcial:"
     putStrLn ("     " ++ concat (map (\x -> return (chr (x + ord 'A' - 1)) ++ " | ") [1..tamanho]))
 
     let imprimirValor posicao

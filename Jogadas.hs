@@ -10,6 +10,7 @@ import Text.Read (readMaybe)
 import Tabuleiro
 import Validacoes
 import Utilitarios
+import Debug.Trace
 
 -- Método responsável por perguntar ao usuário a jogada desejada
 perguntaJogada :: Int -> Tabuleiro -> IO ()

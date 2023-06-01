@@ -129,7 +129,7 @@ ehBomba linha coluna tabuleiro =
 
 -- Método que verifica se o total máximo de marcações foi atingido
 totalMarcacoesAtingido :: Tabuleiro -> Int -> Bool
-totalMarcacoesAtingido tabuleiro tamanho = length (filter marcada tabuleiro) == (tamanho * tamanho) `div` 2
+totalMarcacoesAtingido tabuleiro tamanho = length (filter marcada tabuleiro) >= (tamanho * tamanho) `div` 2
 
 -- Método que marca bomba em tabuleiro
 marcarBombaTabuleiro :: Int -> Int -> Tabuleiro -> Tabuleiro
@@ -177,6 +177,5 @@ imprimirTabuleiro tabuleiro tamanho = do
             | marcada posicao = "B"
             | otherwise = "*"
 
-    --putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
-    -- imprime as posições exibindo a linha e coluna de cada posição
-    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro))
+    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
+  --  putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro))

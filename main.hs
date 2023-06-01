@@ -28,10 +28,5 @@ main = do
     putStrLn "Bem vindo ao Campo Minado!"
 
     imprimirTabuleiro tabuleiro tamanho
-
-    --imprimirTabuleiro tabuleiro tamanho
-    --revelarTabuleiro tabuleiro tamanho
-    
-    jogada <- perguntaJogada tamanho tabuleiro
-    putStrLn ("Jogada escolhida: " ++ show jogada)
+    perguntaJogada tamanho tabuleiro
     

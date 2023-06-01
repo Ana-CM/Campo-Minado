@@ -27,7 +27,20 @@ perguntaJogada tamanho tabuleiro = do
 
     case validado of
         "abrir" -> do
-            putStrLn ("Abrir " ++ jogada)
+            let ehUmaBomba = ehBomba indiceLinha indiceColuna tabuleiro
+            if ehUmaBomba
+                then do
+                    putStrLn ""
+                    putStrLn "Game Over! Você foi explodido!"
+                    putStrLn ""
+                    putStrLn "Tabuleiro revelado:"
+                    revelarTabuleiro tabuleiro tamanho
+            else do
+                let novoTabuleiro = abrirPosicao indiceLinha indiceColuna tabuleiro tamanho
+                putStrLn ("Abrir " ++ jogada)
+                imprimirTabuleiro novoTabuleiro tamanho
+                -- verificar se o jogo acabou
+                perguntaJogada tamanho novoTabuleiro
         "marcar" -> do
             let novoTabuleiro = marcarBomba indiceLinha indiceColuna tabuleiro tamanho
             putStrLn ("Marcar " ++ jogada)
@@ -44,6 +57,15 @@ perguntaJogada tamanho tabuleiro = do
             putStrLn ("Jogada inválida! " ++ jogada)
             imprimirTabuleiro novoTabuleiro tamanho
             perguntaJogada tamanho novoTabuleiro
+
+-- Método responsável por validar a jogada
+abrirPosicao :: Int -> Int -> Tabuleiro -> Int -> Tabuleiro
+abrirPosicao linha coluna tabuleiro tamanho =
+    if (not (estaAberta linha coluna tabuleiro)) && (not (estaMarcada linha coluna tabuleiro))
+        then 
+            abrirPosicaoTabuleiro linha coluna tabuleiro
+    else
+        tabuleiro
 
 -- Método responsável por marcar uma posição no tabuleiro como bomba
 marcarBomba :: Int -> Int -> Tabuleiro -> Int-> Tabuleiro

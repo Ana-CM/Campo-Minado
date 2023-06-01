@@ -187,6 +187,15 @@ desmarcarBombaTabuleiro linha coluna tabuleiro =
 desmarcarBombaPosicao :: Posicao -> Posicao
 desmarcarBombaPosicao posicao = posicao { marcada = False }
 
+-- Método que verifica se o jogo acabou
+jogoAcabou :: Tabuleiro -> Bool
+jogoAcabou tabuleiro = 
+    let posicoesNaoBombas = filter (\pos -> not (bomba pos)) tabuleiro
+        posicoesNaoBombasAbertas = filter (\pos -> aberta pos) posicoesNaoBombas
+        posicoesBombas = filter (\pos -> bomba pos) tabuleiro
+        posicoesBombasMarcadas = filter (\pos -> marcada pos) posicoesBombas
+    in length posicoesNaoBombasAbertas == length posicoesNaoBombas && length posicoesBombasMarcadas == length posicoesBombas
+
 -- Método revelar tabuleiro
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do

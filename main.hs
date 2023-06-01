@@ -23,6 +23,8 @@ main = do
     let qtdBombas = validarQuantidadeBombas (validarInteiroEntrada bombas) (tamanho*tamanho)
 
     tabuleiro <- gerarTabuleiro tamanho qtdBombas
+    
+    revelarTabuleiro tabuleiro tamanho
 
     putStrLn ""
     putStrLn "Bem vindo ao Campo Minado!"

@@ -39,14 +39,30 @@ perguntaJogada tamanho tabuleiro = do
                 let novoTabuleiro = abrirPosicao indiceLinha indiceColuna tabuleiro tamanho
                 putStrLn ("Abrir " ++ jogada)
                 imprimirTabuleiro novoTabuleiro tamanho
-                -- verificar se o jogo acabou
-                perguntaJogada tamanho novoTabuleiro
+                let acabou = jogoAcabou novoTabuleiro
+                if acabou
+                    then do
+                        putStrLn ""
+                        putStrLn "Parabéns! Você venceu!"
+                        putStrLn ""
+                        putStrLn "Tabuleiro revelado:"
+                        revelarTabuleiro novoTabuleiro tamanho
+                else
+                    perguntaJogada tamanho novoTabuleiro
         "marcar" -> do
             let novoTabuleiro = marcarBomba indiceLinha indiceColuna tabuleiro tamanho
             putStrLn ("Marcar " ++ jogada)
             imprimirTabuleiro novoTabuleiro tamanho
-            -- verificar se o jogo acabou
-            perguntaJogada tamanho novoTabuleiro
+            let acabou = jogoAcabou novoTabuleiro
+            if acabou
+                then do
+                    putStrLn ""
+                    putStrLn "Parabéns! Você venceu!"
+                    putStrLn ""
+                    putStrLn "Tabuleiro revelado:"
+                    revelarTabuleiro novoTabuleiro tamanho
+            else
+                perguntaJogada tamanho novoTabuleiro
         "desmarcar" -> do
             let novoTabuleiro = desmarcarBomba indiceLinha indiceColuna tabuleiro tamanho
             putStrLn ("Desmarcar " ++ jogada)

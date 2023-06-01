@@ -9,6 +9,7 @@ module Validacoes where
 import Utilitarios
 import Text.Read (readMaybe)
 import Data.Char (ord)
+import Tabuleiro
 
 -- Método responsável por validar inteiro, caso não seja um inteiro, retorna 26
 validarInteiroEntrada :: String -> Int
@@ -55,8 +56,8 @@ validarJogada jogada tamanho = do
           let (linha, coluna) = separarString fim
           if validarLetra linha && validarInteiro coluna
             then do
-              let linhaInt = converterLetraParaNumero linha
-              let colunaInt = converterStringParaInt coluna
+              let colunaInt = converterLetraParaNumero linha
+              let linhaInt = converterStringParaInt coluna
               if linhaInt <= tamanho && colunaInt <= tamanho
                 then return ("desmarcar", linhaInt, colunaInt)
               else return ("invalido", 0, 0)
@@ -65,8 +66,8 @@ validarJogada jogada tamanho = do
           let (linha, coluna) = separarString fim
           if validarLetra linha && validarInteiro coluna
             then do
-              let linhaInt = converterLetraParaNumero linha
-              let colunaInt = converterStringParaInt coluna
+              let colunaInt = converterLetraParaNumero linha
+              let linhaInt = converterStringParaInt coluna
               if linhaInt <= tamanho && colunaInt <= tamanho
                 then return ("marcar", linhaInt, colunaInt)
               else return ("invalido", 0, 0)
@@ -74,8 +75,8 @@ validarJogada jogada tamanho = do
         _ -> do
           if validarLetra primeiro && validarInteiro fim
             then do
-              let linhaInt = converterLetraParaNumero primeiro
-              let colunaInt = converterStringParaInt fim
+              let colunaInt = converterLetraParaNumero primeiro
+              let linhaInt = converterStringParaInt fim
               if linhaInt <= tamanho && colunaInt <= tamanho
                 then return ("abrir", linhaInt, colunaInt)
               else return ("invalido", 0, 0)

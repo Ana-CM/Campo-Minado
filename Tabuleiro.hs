@@ -96,7 +96,60 @@ posicoesAdjacentes posicao posicoes = filter (\adj -> ehAdjacente posicao adj) p
         let dl = abs (linha p1 - linha p2)
             dc = abs (coluna p1 - coluna p2)
         in (dl == 1 && dc == 0) || (dl == 0 && dc == 1)
-    
+
+-- Método para encontrar uma posição no tabuleiro
+encontraPosicao :: Int -> Int -> Tabuleiro -> Maybe Posicao
+encontraPosicao linha' coluna' tabuleiro =
+    find (\pos -> linha pos == linha' && coluna pos == coluna') tabuleiro
+
+-- Método para retornar se a posição está aberta 
+estaAberta :: Int -> Int -> Tabuleiro -> Bool
+estaAberta linha coluna tabuleiro =
+    let posicao = encontraPosicao linha coluna tabuleiro
+    in case posicao of
+        Nothing -> False
+        Just pos -> aberta pos
+
+-- Método para retornar se a posição está marcada como bomba
+estaMarcada :: Int -> Int -> Tabuleiro -> Bool
+estaMarcada linha coluna tabuleiro =
+    let posicao = encontraPosicao linha coluna tabuleiro
+    in case posicao of
+        Nothing -> False
+        Just pos -> marcada pos
+
+-- Método para retornar se a posição é uma bomba
+ehBomba :: Int -> Int -> Tabuleiro -> Bool
+ehBomba linha coluna tabuleiro =
+    let posicao = encontraPosicao linha coluna tabuleiro
+    in case posicao of
+        Nothing -> False
+        Just pos -> bomba pos
+
+
+-- Método que verifica se o total máximo de marcações foi atingido
+totalMarcacoesAtingido :: Tabuleiro -> Int -> Bool
+totalMarcacoesAtingido tabuleiro tamanho = length (filter marcada tabuleiro) == (tamanho * tamanho) `div` 2
+
+-- Método que marca bomba em tabuleiro
+marcarBombaTabuleiro :: Int -> Int -> Tabuleiro -> Tabuleiro
+marcarBombaTabuleiro linha coluna tabuleiro = 
+    let posicao = encontraPosicao linha coluna tabuleiro
+    in case posicao of
+        Nothing -> tabuleiro
+        Just pos ->
+            let indice = elemIndex pos tabuleiro
+            in case indice of
+                Nothing -> tabuleiro
+                Just idx ->
+                    let (antes, depois) = splitAt idx tabuleiro
+                        novasPosicoes = antes ++ (marcarBombaPosicao pos : tail depois)
+                    in novasPosicoes
+
+-- Método que marca uma posição como bomba
+marcarBombaPosicao :: Posicao -> Posicao
+marcarBombaPosicao posicao = posicao { marcada = True }
+
 -- Método revelar tabuleiro
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do
@@ -124,5 +177,6 @@ imprimirTabuleiro tabuleiro tamanho = do
             | marcada posicao = "B"
             | otherwise = "*"
 
-    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
-
+    --putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
+    -- imprime as posições exibindo a linha e coluna de cada posição
+    putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro))

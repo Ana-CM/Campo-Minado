@@ -25,9 +25,6 @@ perguntaJogada tamanho tabuleiro = do
     let indiceLinha = linha - 1
     let indiceColuna = coluna - 1
 
-    putStrLn ("Linha: " ++ show indiceLinha)
-    putStrLn ("Coluna: " ++ show indiceColuna)
-
     case validado of
         "abrir" -> do
             putStrLn ("Abrir " ++ jogada)
@@ -38,7 +35,10 @@ perguntaJogada tamanho tabuleiro = do
             -- verificar se o jogo acabou
             perguntaJogada tamanho novoTabuleiro
         "desmarcar" -> do
+            let novoTabuleiro = desmarcarBomba indiceLinha indiceColuna tabuleiro tamanho
             putStrLn ("Desmarcar " ++ jogada)
+            imprimirTabuleiro novoTabuleiro tamanho
+            perguntaJogada tamanho novoTabuleiro
         _ -> do
             let novoTabuleiro = tabuleiro
             putStrLn ("Jogada inválida! " ++ jogada)
@@ -51,5 +51,14 @@ marcarBomba linha coluna tabuleiro tamanho =
     if (not (estaAberta linha coluna tabuleiro)) && (not (estaMarcada linha coluna tabuleiro)) && (not (totalMarcacoesAtingido tabuleiro tamanho))
         then 
             marcarBombaTabuleiro linha coluna tabuleiro
+    else
+        tabuleiro
+
+-- Método responsável por desmarcar uma posição no tabuleiro como bomba
+desmarcarBomba :: Int -> Int -> Tabuleiro -> Int-> Tabuleiro
+desmarcarBomba linha coluna tabuleiro tamanho =
+    if (not (estaAberta linha coluna tabuleiro)) && (estaMarcada linha coluna tabuleiro)
+        then 
+            desmarcarBombaTabuleiro linha coluna tabuleiro
     else
         tabuleiro

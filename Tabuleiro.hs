@@ -150,6 +150,25 @@ marcarBombaTabuleiro linha coluna tabuleiro =
 marcarBombaPosicao :: Posicao -> Posicao
 marcarBombaPosicao posicao = posicao { marcada = True }
 
+-- Método que desmarca bomba no tabuleiro
+desmarcarBombaTabuleiro :: Int -> Int -> Tabuleiro -> Tabuleiro
+desmarcarBombaTabuleiro linha coluna tabuleiro = 
+    let posicao = encontraPosicao linha coluna tabuleiro
+    in case posicao of
+        Nothing -> tabuleiro
+        Just pos ->
+            let indice = elemIndex pos tabuleiro
+            in case indice of
+                Nothing -> tabuleiro
+                Just idx ->
+                    let (antes, depois) = splitAt idx tabuleiro
+                        novasPosicoes = antes ++ (desmarcarBombaPosicao pos : tail depois)
+                    in novasPosicoes
+
+-- Método que desmarca uma posição como bomba
+desmarcarBombaPosicao :: Posicao -> Posicao
+desmarcarBombaPosicao posicao = posicao { marcada = False }
+
 -- Método revelar tabuleiro
 revelarTabuleiro :: Tabuleiro -> Int -> IO ()
 revelarTabuleiro tabuleiro tamanho = do

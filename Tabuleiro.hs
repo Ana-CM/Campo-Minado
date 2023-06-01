@@ -208,10 +208,6 @@ revelarTabuleiro tabuleiro tamanho = do
     
     putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
 
-    -- Descomente caso deseja imprimir as posições exibindo a linha e coluna de cada posição
-   {- putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show (linha x) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro)) -}
-
-
 -- Método para imprimir o tabuleiro para o usuário
 imprimirTabuleiro :: Tabuleiro -> Int -> IO ()
 imprimirTabuleiro tabuleiro tamanho = do
@@ -224,5 +220,3 @@ imprimirTabuleiro tabuleiro tamanho = do
             | otherwise = "*"
 
     putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " | " else imprimirValor x ++ " | ") tabuleiro))
-  -- Descomente caso deseja imprimir as posições exibindo a linha e coluna de cada posição
-  --  putStrLn (concat (map (\x -> if (coluna x) == 0 then "\n" ++ show ((linha x) + 1) ++ "    " ++ imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | " else imprimirValor x ++ " (" ++ show(linha x) ++ "," ++ show(coluna x) ++ ") | ") tabuleiro))
